@@ -384,7 +384,8 @@ export class Region {
         this.element.addEventListener('click', (e) => {
             e.preventDefault();
             this.fireEvent('click', e);
-            this.wavesurfer.fireEvent('region-click', this, e);
+            this.wavesurfer.fireEvent('region-click', this, e)
+            this.shiftKeyActive = false;
         });
 
         this.element.addEventListener('dblclick', (e) => {
