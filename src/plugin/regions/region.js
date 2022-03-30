@@ -558,10 +558,12 @@ export class Region {
                     ? 'start'
                     : 'end';
             } else if (event.shiftKey) {
+                console.log("event", event);
                 this.isDragging = true;
                 drag = true;
                 resize = false;
             }  else {
+                console.log("a", event);
                 // this.isDragging = true;
                 // drag = true;
                 // resize = false;
