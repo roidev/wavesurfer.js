@@ -374,12 +374,12 @@ export class Region {
         this.element.addEventListener('mouseenter', (e) => {
             this.fireEvent('mouseenter', e);
             this.wavesurfer.fireEvent('region-mouseenter', this, e);
+            this.shiftKeyActive = false;
         });
 
         this.element.addEventListener('mouseleave', (e) => {
             this.fireEvent('mouseleave', e);
             this.wavesurfer.fireEvent('region-mouseleave', this, e);
-            this.shiftKeyActive = false;
         });
 
         this.element.addEventListener('click', (e) => {
