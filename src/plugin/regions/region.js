@@ -557,7 +557,7 @@ export class Region {
                 resize = event.target.classList.contains('wavesurfer-handle-start')
                     ? 'start'
                     : 'end';
-            } else if (e.shiftKey) {
+            } else if (event.shiftKey) {
                 this.isDragging = true;
                 drag = true;
                 resize = false;
