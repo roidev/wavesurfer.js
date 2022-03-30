@@ -20,10 +20,11 @@ export class Region {
         this.id = params.id == null ? ws.util.getId() : params.id;
         this.start = Number(params.start) || 0;
         this.end =
-            params.end == null ? // small marker-like region
-            this.start +
-            (4 / this.wrapper.scrollWidth) * this.wavesurfer.getDuration() :
-            Number(params.end);
+            params.end == null
+                ? // small marker-like region
+                this.start +
+                (4 / this.wrapper.scrollWidth) * this.wavesurfer.getDuration()
+                : Number(params.end);
         this.resize =
             params.resize === undefined ? true : Boolean(params.resize);
         this.drag = params.drag === undefined ? true : Boolean(params.drag);
@@ -42,7 +43,7 @@ export class Region {
         this.handleRightEl = null;
         this.data = params.data || {};
         this.attributes = params.attributes || {};
-        this.showTooltip = params.showTooltip ? ? true;
+        this.showTooltip = params.showTooltip ?? true;
 
         this.maxLength = params.maxLength;
         // It assumes the minLength parameter value, or the regionsMinLength parameter value, if the first one not provided
@@ -54,9 +55,9 @@ export class Region {
         this.scrollThreshold = params.scrollThreshold || 10;
         // Determines whether the context menu is prevented from being opened.
         this.preventContextMenu =
-            params.preventContextMenu === undefined ?
-            false :
-            Boolean(params.preventContextMenu);
+            params.preventContextMenu === undefined
+                ? false
+                : Boolean(params.preventContextMenu);
 
         // select channel ID to set region
         let channelIdx =
@@ -67,9 +68,9 @@ export class Region {
 
         if (channelIdx !== -1) {
             let channelCount =
-                this.wavesurfer.backend.buffer != null ?
-                this.wavesurfer.backend.buffer.numberOfChannels :
-                -1;
+                this.wavesurfer.backend.buffer != null
+                    ? this.wavesurfer.backend.buffer.numberOfChannels
+                    : -1;
             if (channelCount >= 0 && channelIdx < channelCount) {
                 this.regionHeight = Math.floor((1 / channelCount) * 100) + '%';
                 this.marginTop =
@@ -221,23 +222,21 @@ export class Region {
 
             // Merge CSS properties per handle.
             const handleLeftCss =
-                this.handleStyle.left !== 'none' ?
-                Object.assign({
-                        left: '0px'
-                    },
-                    css,
-                    this.handleStyle.left
-                ) :
-                null;
+                this.handleStyle.left !== 'none'
+                    ? Object.assign(
+                        { left: '0px' },
+                        css,
+                        this.handleStyle.left
+                    )
+                    : null;
             const handleRightCss =
-                this.handleStyle.right !== 'none' ?
-                Object.assign({
-                        right: '0px'
-                    },
-                    css,
-                    this.handleStyle.right
-                ) :
-                null;
+                this.handleStyle.right !== 'none'
+                    ? Object.assign(
+                        { right: '0px' },
+                        css,
+                        this.handleStyle.right
+                    )
+                    : null;
 
             if (handleLeftCss) {
                 this.style(this.handleLeftEl, handleLeftCss);
@@ -257,10 +256,12 @@ export class Region {
             return this.formatTimeCallback(start, end);
         }
         return (start == end ? [start] : [start, end])
-            .map((time) => [
-                Math.floor((time % 3600) / 60), // minutes
-                ('00' + Math.floor(time % 60)).slice(-2) // seconds
-            ].join(':'))
+            .map((time) =>
+                [
+                    Math.floor((time % 3600) / 60), // minutes
+                    ('00' + Math.floor(time % 60)).slice(-2) // seconds
+                ].join(':')
+            )
             .join('-');
     }
 
@@ -553,14 +554,14 @@ export class Region {
             this.isDragging = false;
             if (event.target.tagName.toLowerCase() === 'handle') {
                 this.isResizing = true;
-                resize = event.target.classList.contains('wavesurfer-handle-start') ?
-                    'start' :
-                    'end';
+                resize = event.target.classList.contains('wavesurfer-handle-start')
+                    ? 'start'
+                    : 'end';
             } else if (e.shiftKey) {
                 this.isDragging = true;
                 drag = true;
                 resize = false;
-            } else {
+            }  else {
                 // this.isDragging = true;
                 // drag = true;
                 // resize = false;
@@ -684,9 +685,7 @@ export class Region {
         this.element.addEventListener('touchstart', onDown);
 
         document.body.addEventListener('mousemove', onMove);
-        document.body.addEventListener('touchmove', onMove, {
-            passive: false
-        });
+        document.body.addEventListener('touchmove', onMove, {passive: false});
 
         document.addEventListener('mouseup', onUp);
         document.body.addEventListener('touchend', onUp);
@@ -807,11 +806,7 @@ export class Region {
             cursorStyle = 'auto';
         }
 
-        this.handleLeftEl && this.style(this.handleLeftEl, {
-            cursor: cursorStyle
-        });
-        this.handleRightEl && this.style(this.handleRightEl, {
-            cursor: cursorStyle
-        });
+        this.handleLeftEl && this.style(this.handleLeftEl, { cursor: cursorStyle });
+        this.handleRightEl && this.style(this.handleRightEl, { cursor: cursorStyle });
     }
 }
