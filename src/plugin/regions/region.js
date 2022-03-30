@@ -28,6 +28,7 @@ export class Region {
         this.resize =
             params.resize === undefined ? true : Boolean(params.resize);
         this.drag = params.drag === undefined ? true : Boolean(params.drag);
+        this.shiftKeyActive = false;
         // reflect resize and drag state of region for region-updated listener
         this.isResizing = false;
         this.isDragging = false;
@@ -300,11 +301,12 @@ export class Region {
             const left = Math.round((startLimited / dur) * width);
             const regionWidth = Math.round((endLimited / dur) * width) - left;
 
+            //EVL
             this.style(this.element, {
                 left: left + 'px',
                 width: regionWidth + 'px',
                 backgroundColor: this.color,
-                cursor: this.drag ? 'move' : 'default'
+                cursor: this.drag && this.shiftKeyActive ? 'move' : 'default'
             });
 
             for (const attrname in this.attributes) {
@@ -561,6 +563,7 @@ export class Region {
             } else if (event.shiftKey) {
                 // console.log("event", event);
                 this.isDragging = true;
+                this.shiftKeyActive = true;
                 drag = true;
                 resize = false;
             }  else {
