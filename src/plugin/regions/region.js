@@ -553,6 +553,7 @@ export class Region {
             this.isResizing = false;
             this.isDragging = false;
             if (event.target.tagName.toLowerCase() === 'handle') {
+                console.log(event.target.tagName.toLowerCase())
                 this.isResizing = true;
                 resize = event.target.classList.contains('wavesurfer-handle-start')
                     ? 'start'
@@ -564,9 +565,9 @@ export class Region {
                 resize = false;
             }  else {
                 console.log("a", event);
-                // this.isDragging = true;
-                // drag = true;
-                // resize = false;
+                this.isDragging = false;
+                drag = false;
+                resize = false;
             }
         };
         const onUp = (event) => {
