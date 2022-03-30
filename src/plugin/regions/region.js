@@ -571,6 +571,7 @@ export class Region {
                 this.isDragging = false;
                 drag = false;
                 resize = false;
+                this.shiftKeyActive = false;
             }
         };
         const onUp = (event) => {
