@@ -28,7 +28,6 @@ export class Region {
         this.resize =
             params.resize === undefined ? true : Boolean(params.resize);
         this.drag = params.drag === undefined ? true : Boolean(params.drag);
-        this.shiftKeyActive = false;
         // reflect resize and drag state of region for region-updated listener
         this.isResizing = false;
         this.isDragging = false;
@@ -306,7 +305,7 @@ export class Region {
                 left: left + 'px',
                 width: regionWidth + 'px',
                 backgroundColor: this.color,
-                cursor: this.drag && this.shiftKeyActive ? 'move' : 'default'
+                cursor: this.drag ? 'move' : 'default'
             });
 
             for (const attrname in this.attributes) {
@@ -374,7 +373,7 @@ export class Region {
         this.element.addEventListener('mouseenter', (e) => {
             this.fireEvent('mouseenter', e);
             this.wavesurfer.fireEvent('region-mouseenter', this, e);
-            this.shiftKeyActive = false;
+            this.drag = false;
         });
 
         this.element.addEventListener('mouseleave', (e) => {
@@ -564,7 +563,6 @@ export class Region {
             } else if (event.shiftKey) {
                 // console.log("event", event);
                 this.isDragging = true;
-                this.shiftKeyActive = true;
                 drag = true;
                 resize = false;
             }  else {
@@ -572,7 +570,6 @@ export class Region {
                 this.isDragging = false;
                 drag = false;
                 resize = false;
-                this.shiftKeyActive = false;
             }
         };
         const onUp = (event) => {
