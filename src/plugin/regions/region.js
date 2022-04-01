@@ -300,14 +300,14 @@ export class Region {
             // no gaps appear between regions.
             const left = Math.round((startLimited / dur) * width);
             const regionWidth = Math.round((endLimited / dur) * width) - left;
+            console.log("SHIFT", this.shiftKeyActive);
 
             //EVL
             this.style(this.element, {
                 left: left + 'px',
                 width: regionWidth + 'px',
                 backgroundColor: this.color,
-                // cursor: this.drag && this.shiftKeyActive ? 'move' : 'default'
-                cursor:'default'
+                cursor: this.drag && this.shiftKeyActive ? 'move' : 'default'
             });
 
             for (const attrname in this.attributes) {
@@ -375,6 +375,7 @@ export class Region {
         this.element.addEventListener('mouseenter', (e) => {
             this.fireEvent('mouseenter', e);
             this.wavesurfer.fireEvent('region-mouseenter', this, e);
+            this.shiftKeyActive = false;
         });
 
         this.element.addEventListener('mouseleave', (e) => {
@@ -568,13 +569,6 @@ export class Region {
                 this.shiftKeyActive = true;
                 drag = true;
                 resize = false;
-
-                this.style(this.element, {
-                    left: "",
-                    width: "",
-                    backgroundColor: "",
-                    cursor:"move"
-                });
 
             }  else {
                 // console.log("a", event);
